@@ -1,4 +1,5 @@
 import cv
+import urllib2
 
 #grab an image from the camera and save it
 capture = cv.CaptureFromCAM(-1) #-1 will select the first camera available, usually /dev/video0 on linux
@@ -81,26 +82,17 @@ else:
     f.write("clean")
 f.close()
 
-# #send text message
-# import smtplib
-# from email.mime.image import MIMEImage
-# from email.mime.text import MIMEText
-# from email.mime.multipart import MIMEMultipart
-# img = open("/var/lib/cloud9/Dish-Detector/sink-latest-circles.jpg", "rb")
-# msg = MIMEMultipart()
-# msg.attach(MIMEImage(img.read()))
-# def sendmsg(message):
-#     f = open("/var/lib/cloud9/Dish-Detector/last-msg.txt", "w")
-#     f.write(str(message))
-#     f.close()
-#     server = smtplib.SMTP("smtp.gmail.com", 587)
-#     server.set_debuglevel(1)
-#     server.starttls()
-#     server.login('user@gmail.com', 'password')
-#     server.sendmail('user@gmail.com', 'phone@mms.att.net', msg.as_string())
-# if dirty and not wasDirty:
-#     msg.attach(MIMEText("Dishes are dirty"))
-#     sendmsg(msg)
-# elif not dirty and wasDirty:
-#     msg.attach(MIMEText("Dishes are clean!"))
-#     sendmsg(msg)
+#send hipchat notification
+dirtyurl = "https://api.hipchat.com/v1/rooms/message?format=json&auth_token=adfa81620ff9b4c9756302cfb7e17d&room_id=920103&from=DishBot&message=Someone+@here+left+their+dishes+in+the+sink!&message_format=text&color=yellow&notify=1"
+cleanurl = "https://api.hipchat.com/v1/rooms/message?format=json&auth_token=adfa81620ff9b4c9756302cfb7e17d&room_id=920103&from=DishBot&message=HUP:+The+sink+is+clean+now.+Let's+keep+it+that+way!&message_format=text&color=green&notify=1"
+
+if dirty and not wasDirty:
+    request = urllib2.Request(dirtyurl)
+    response = urllib2.urlopen(request)
+    print "The sink just became DIRTY. Sent a message!"
+    print response.read()
+elif not dirty and wasDirty:
+    request = urllib2.Request(cleanurl)
+    response = urllib2.urlopen(request)
+    print "The sink just became CLEAN. Sent a message!"
+    print response.read()
