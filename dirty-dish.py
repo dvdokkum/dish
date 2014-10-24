@@ -12,7 +12,7 @@ edges = cv.CreateImage(cv.GetSize(im), cv.IPL_DEPTH_8U, 1)
 cv.CvtColor(im, edges, cv.CV_BGR2GRAY)
 
 #edge detect it, then smooth the edges
-thresh = 150
+thresh = 100
 cv.Canny(edges, edges, thresh, thresh / 2, 3)
 cv.Smooth(edges, edges, cv.CV_GAUSSIAN, 3, 3) 
 cv.SaveImage("/home/pi/dish/capture/sink-latest-edges.jpg", edges)
