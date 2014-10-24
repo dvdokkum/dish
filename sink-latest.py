@@ -12,6 +12,7 @@ cv.Canny(edges, edges, thresh, thresh / 2, 3)
 cv.Smooth(edges, edges, cv.CV_GAUSSIAN, 3, 3)
 storage = cv.CreateMat(640, 1, cv.CV_32FC3)
 cv.HoughCircles(edges, storage, cv.CV_HOUGH_GRADIENT, 2, edges.width / 10, thresh, 350, 0, 0)
+
 # f = open("/home/pi/dish/sink-empty.txt", "w")
 # for i in range(storage.rows):
 #     val = storage[i, 0]
@@ -27,7 +28,7 @@ drains = []
 for line in f:
     val = line.split(",")
     drains.append((int(val[0]), int(val[1]), int(val[2])))
-tolerance = 10
+tolerance = 20
 for i in range(storage.rows):
     val = storage[i, 0]
     centerX = int(val[0])
