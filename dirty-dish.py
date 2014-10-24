@@ -54,7 +54,7 @@ for i in range(storage.rows):
 #test for drains not seen
 for j in range(len(drains)):
     if drains[j][2] != 0:
-        dirty = True
+        #dirty = True
         print "drain not found at: " + str(drains[j][0]) + "," + str(drains[j][1])
         cv.Circle(im, (drains[j][0], drains[j][1]), 10, (255, 0, 0), thickness=3) 
 
