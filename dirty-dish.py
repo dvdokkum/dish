@@ -19,7 +19,7 @@ cv.SaveImage("/home/pi/dish/capture/sink-latest-edges.jpg", edges)
 
 #find the circles
 storage = cv.CreateMat(640, 1, cv.CV_32FC3)
-cv.HoughCircles(edges, storage, cv.CV_HOUGH_GRADIENT, 2, edges.width / 10, thresh, 200, 0, 0)
+cv.HoughCircles(edges, storage, cv.CV_HOUGH_GRADIENT, 2, edges.width / 10, thresh, 175, 0, 0)
 
 #read where the drains are
 dirty = False
