@@ -12,14 +12,14 @@ edges = cv.CreateImage(cv.GetSize(im), cv.IPL_DEPTH_8U, 1)
 cv.CvtColor(im, edges, cv.CV_BGR2GRAY)
 
 #edge detect it, then smooth the edges
-thresh = 100
+thresh = 120
 cv.Canny(edges, edges, thresh, thresh / 2, 3)
 cv.Smooth(edges, edges, cv.CV_GAUSSIAN, 3, 3) 
 cv.SaveImage("/home/pi/dish/capture/sink-latest-edges.jpg", edges)
 
 #find the circles
 storage = cv.CreateMat(640, 1, cv.CV_32FC3)
-cv.HoughCircles(edges, storage, cv.CV_HOUGH_GRADIENT, 2, edges.width / 10, thresh, 350, 0, 0)
+cv.HoughCircles(edges, storage, cv.CV_HOUGH_GRADIENT, 2, edges.width / 10, thresh, 170, 0, 0)
 
 #read where the drains are
 dirty = False
