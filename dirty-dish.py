@@ -63,7 +63,7 @@ cv.SaveImage("/home/pi/dish/capture/sink-latest-circles.jpg", im)
 
 #load last status
 import os.path
-status = "/var/lib/cloud9/Dish-Detector/status.txt"
+status = "/home/pi/dish/status.txt"
 if os.path.isfile(status):
     f = open(status, "r")
     wasDirty = f.readline() == "dirty"
