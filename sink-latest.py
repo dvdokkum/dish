@@ -28,7 +28,7 @@ drains = []
 for line in f:
     val = line.split(",")
     drains.append((int(val[0]), int(val[1]), int(val[2])))
-tolerance = 20
+tolerance = 30
 for i in range(storage.rows):
     val = storage[i, 0]
     centerX = int(val[0])
