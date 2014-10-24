@@ -28,12 +28,16 @@ drains = []
 for line in f:
     val = line.split(",")
     drains.append((int(val[0]), int(val[1]), int(val[2])))
-tolerance = 30
+tolerance = 10
 for i in range(storage.rows):
     val = storage[i, 0]
     centerX = int(val[0])
     centerY = int(val[1])
     radius = int(val[2])
+    print centerX
+    print centerY
+    print radius
+    print drains
     isdrain = False
     for j in range(len(drains)):
         if abs(centerX - drains[j][0]) < tolerance:
