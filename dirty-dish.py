@@ -7,7 +7,6 @@ cv.SetCaptureProperty(capture, cv.CV_CAP_PROP_FRAME_WIDTH, 320)
 cv.SetCaptureProperty(capture, cv.CV_CAP_PROP_FRAME_HEIGHT, 240)
 im = cv.QueryFrame(capture)
 cv.SaveImage("/home/pi/dish/capture/sink-latest.jpg", im)
-cv.SaveImage("/usr/share/nginx/www/sink-latest.jpg", im)
 
 #convert the image to grayscale
 edges = cv.CreateImage(cv.GetSize(im), cv.IPL_DEPTH_8U, 1)
@@ -18,7 +17,6 @@ thresh = 120
 cv.Canny(edges, edges, thresh, thresh / 2, 3)
 cv.Smooth(edges, edges, cv.CV_GAUSSIAN, 3, 3) 
 cv.SaveImage("/home/pi/dish/capture/sink-latest-edges.jpg", edges)
-cv.SaveImage("/usr/share/nginx/www/sink-latest-edges.jpg", edges)
 
 #find the circles
 storage = cv.CreateMat(640, 1, cv.CV_32FC3)
@@ -63,7 +61,6 @@ for j in range(len(drains)):
 
 #save an image for debug
 cv.SaveImage("/home/pi/dish/capture/sink-latest-circles.jpg", im)
-cv.SaveImage("/usr/share/nginx/www/sink-latest-circles.jpg", im)
 
 #load last status
 import os.path
@@ -88,14 +85,21 @@ f.close()
 #send hipchat notification
 dirtyurl = "https://api.hipchat.com/v1/rooms/message?format=json&auth_token=adfa81620ff9b4c9756302cfb7e17d&room_id=920103&from=DishBot&message=Someone+@here+left+their+dishes+in+the+sink!&message_format=text&color=yellow&notify=1"
 cleanurl = "https://api.hipchat.com/v1/rooms/message?format=json&auth_token=adfa81620ff9b4c9756302cfb7e17d&room_id=920103&from=DishBot&message=HUP:+The+sink+is+clean+now.+Let's+keep+it+that+way!&message_format=text&color=green&notify=1"
+imageurl = "http://raspbeat01.local/sink-latest.jpg"
 
 if dirty and not wasDirty:
     request = urllib2.Request(dirtyurl)
     response = urllib2.urlopen(request)
     print "The sink just became DIRTY. Sent a message!"
     print response.read()
+    request = urllib2.Request(imageurl)
+    response = urllib2.urlopen(request)
+    print response.read()
 elif not dirty and wasDirty:
     request = urllib2.Request(cleanurl)
     response = urllib2.urlopen(request)
     print "The sink just became CLEAN. Sent a message!"
+    print response.read()
+    request = urllib2.Request(imageurl)
+    response = urllib2.urlopen(request)
     print response.read()
