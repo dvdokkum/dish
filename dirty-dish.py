@@ -83,9 +83,10 @@ else:
 f.close()
 
 #send hipchat notification
-dirtyurl = "https://api.hipchat.com/v1/rooms/message?format=json&auth_token=adfa81620ff9b4c9756302cfb7e17d&room_id=920103&from=DishBot&message=Someone+@here+left+their+dishes+in+the+sink!&message_format=text&color=yellow&notify=1"
-cleanurl = "https://api.hipchat.com/v1/rooms/message?format=json&auth_token=adfa81620ff9b4c9756302cfb7e17d&room_id=920103&from=DishBot&message=HUP:+The+sink+is+clean+now.+Let's+keep+it+that+way!&message_format=text&color=green&notify=1"
-imageurl = "https://api.hipchat.com/v1/rooms/message?format=json&auth_token=adfa81620ff9b4c9756302cfb7e17d&room_id=920103&from=DishBot&message=http://raspbeat01.local/sink-latest.jpg&message_format=text&color=gray&notify=1"
+dirtyurl = "https://api.hipchat.com/v1/rooms/message?format=json&auth_token=adfa81620ff9b4c9756302cfb7e17d&room_id=920103&from=DishBot&message=Someone+@here+left+their+dishes+in+the+sink!+http://raspbeat01.local/sink-latest.jpg&message_format=text&color=yellow&notify=1"
+cleanurl = "https://api.hipchat.com/v1/rooms/message?format=json&auth_token=adfa81620ff9b4c9756302cfb7e17d&room_id=920103&from=DishBot&message=Yo!+The+sink+is+clean+now.+Let's+keep+it+that+way!+http://raspbeat01.local/sink-latest.jpg&message_format=text&color=green&notify=1"
+#post the image directly to hipchat
+#imageurl = "https://api.hipchat.com/v1/rooms/message?format=json&auth_token=adfa81620ff9b4c9756302cfb7e17d&room_id=920103&from=DishBot&message=http://raspbeat01.local/sink-latest.jpg&message_format=text&color=gray&notify=1"
 
 if dirty and not wasDirty:
     request = urllib2.Request(dirtyurl)
