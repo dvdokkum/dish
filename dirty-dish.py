@@ -1,5 +1,6 @@
 import cv
 import urllib2
+import time
 
 #grab an image from the camera and save it
 capture = cv.CaptureFromCAM(-1) #-1 will select the first camera available, usually /dev/video0 on linux
@@ -83,8 +84,9 @@ else:
 f.close()
 
 #send hipchat notification
-dirtyurl = "https://api.hipchat.com/v1/rooms/message?format=json&auth_token=adfa81620ff9b4c9756302cfb7e17d&room_id=920103&from=DishBot&message=Someone+here+left+their+dishes+in+the+sink!+http://raspbeat01.local/sink-latest.jpg&message_format=text&color=yellow&notify=1"
-cleanurl = "https://api.hipchat.com/v1/rooms/message?format=json&auth_token=adfa81620ff9b4c9756302cfb7e17d&room_id=920103&from=DishBot&message=Yo!+The+sink+is+clean+now.+Let's+keep+it+that+way!+http://raspbeat01.local/sink-latest.jpg&message_format=text&color=green&notify=1"
+time = time.time()
+dirtyurl = "https://api.hipchat.com/v1/rooms/message?format=json&auth_token=adfa81620ff9b4c9756302cfb7e17d&room_id=920103&from=DishBot&message=Someone+here+left+their+dishes+in+the+sink!+http://raspbeat01.local/sink-latest.jpg?%(time)s&message_format=text&color=yellow&notify=1" % locals()
+cleanurl = "https://api.hipchat.com/v1/rooms/message?format=json&auth_token=adfa81620ff9b4c9756302cfb7e17d&room_id=920103&from=DishBot&message=Yo!+The+sink+is+clean+now.+Let's+keep+it+that+way!+http://raspbeat01.local/sink-latest.jpg?%(time)s&message_format=text&color=green&notify=1" % locals()
 #post the image directly to hipchat
 #imageurl = "https://api.hipchat.com/v1/rooms/message?format=json&auth_token=adfa81620ff9b4c9756302cfb7e17d&room_id=920103&from=DishBot&message=http://raspbeat01.local/sink-latest.jpg&message_format=text&color=gray&notify=1"
 
